@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Pagina principal del sistema sin autenticación
+Route::get('/',function(){
+    return view('inicio');//buscamos en "inicio.blade.php"
+})->name('inicio');//asignamos un nombre a la ruta
