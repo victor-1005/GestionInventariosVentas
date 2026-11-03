@@ -91,7 +91,7 @@
                 <p>Organiza los productos por categoría.</p>
             </a>
 
-            <a href="#" class="access-card">
+            <a href="{{ route('encargado.login') }}" class="access-card">
                 <span class="access-icon">🏭</span>
                 <h3>Inventario</h3>
                 <p>Controla las entradas y existencias.</p>

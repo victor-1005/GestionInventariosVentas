@@ -1,8 +1,44 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\EncargadoLoginController;
 
-//Pagina principal del sistema sin autenticación
-Route::get('/',function(){
-    return view('inicio');//buscamos en "inicio.blade.php"
-})->name('inicio');//asignamos un nombre a la ruta
+// Página principal pública.
+Route::get('/', function () {
+    return view('inicio');
+})->name('inicio');
+
+// Rutas de autenticación del encargado.
+Route::prefix('encargado')->name('encargado.')->group(function () {
+
+    Route::get('/login', [EncargadoLoginController::class, 'create'])
+        ->name('login');
+
+    Route::post('/login', [EncargadoLoginController::class, 'store'])
+        ->name('login.store');
+
+    Route::post('/logout', [EncargadoLoginController::class, 'destroy'])
+        ->middleware('auth')
+        ->name('logout');
+
+});
+
+// Rutas privadas del inventario.
+Route::middleware(['auth', 'rol:encargado_inventario'])
+    ->prefix('encargado/inventario')
+    ->name('encargado.inventario.')
+    ->group(function () {
+
+        Route::get('/', function () {
+            return view('encargado.inventario.index');
+        })->name('index');
+
+        Route::get('/ingresos', function () {
+            return view('encargado.inventario.ingreso');
+        })->name('ingresos');
+
+        Route::get('/alertas', function () {
+            return view('encargado.inventario.alertas');
+        })->name('alertas');
+
+    });
