@@ -704,4 +704,140 @@ body {
         grid-template-columns: 1fr;
     }
 }
+/* ========================================
+   10. PANEL DEL MÓDULO DE FORMS
+======================================== */
+.forms-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 65vh;
+    padding: 25px 15px;
+}
 
+.forms-container {
+    width: 100%;
+    max-width: 440px;
+    padding: 38px;
+    background-color: white;
+    border: 1px solid #e7eaf1;
+    border-radius: 18px;
+    box-shadow: 0 10px 35px rgba(30, 48, 80, 0.08);
+}
+
+.forms-icon {
+    width: 62px;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #edf3ff;
+    border-radius: 16px;
+    font-size: 29px;
+    margin-bottom: 22px;
+}
+
+.forms-label {
+    display: block;
+    color: #3da15d;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.forms-container h2 {
+    color: #1d431f;
+    font-size: 27px;
+    margin-bottom: 10px;
+}
+
+.forms-description {
+    color: #758198;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 28px;
+}
+
+.forms-form-group {
+    margin-bottom: 20px;
+}
+
+.forms-form-group label {
+    display: block;
+    color: #057837;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 9px;
+}
+
+.forms-form-group input {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #dce2ec;
+    border-radius: 8px;
+    background-color: #fbfcfe;
+    color: #004a23;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.forms-form-group input:focus {
+    border-color: #52e092;
+    box-shadow: 0 0 0 3px rgba(82, 125, 224, 0.13);
+    background-color: white;
+}
+
+.forms-button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 14px;
+    margin-top: 8px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(120deg, #24b871, #52e078);
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.forms-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(56, 184, 36, 0.22);
+}
+
+.forms-back {
+    display: block;
+    margin-top: 25px;
+    text-align: center;
+    color: #10a400;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.forms-back:hover {
+    text-decoration: underline;
+}
+
+.forms-alert {
+    padding: 13px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #f2c5c5;
+    border-radius: 8px;
+    background-color: #fff1f1;
+    color: #a52a2a;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+@media (max-width: 480px) {
+    .forms-container {
+        padding: 27px 22px;
+    }
+}
