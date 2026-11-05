@@ -717,7 +717,7 @@ body {
 
 .forms-container {
     width: 100%;
-    max-width: 440px;
+    max-width: 1000px;
     padding: 38px;
     background-color: white;
     border: 1px solid #e7eaf1;
@@ -840,4 +840,319 @@ body {
     .forms-container {
         padding: 27px 22px;
     }
+}
+
+/* =========================================
+   REGISTRO DE INGRESOS DE INVENTARIO
+========================================= */
+
+.ingreso-wrapper {
+    width: 100%;
+    max-width: 1450px;
+    margin: 0 auto;
+}
+
+.ingreso-heading {
+    margin-bottom: 25px;
+}
+
+.ingreso-heading h2 {
+    color: #1d2939;
+    font-size: 25px;
+    margin-bottom: 7px;
+}
+
+.ingreso-heading p {
+    color: #758198;
+    font-size: 14px;
+}
+
+.ingreso-paneles {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 20px;
+    align-items: stretch;
+}
+
+.ingreso-panel,
+.lista-ingreso-panel {
+    background: white;
+    border: 1px solid #e5eaf1;
+    border-radius: 13px;
+    padding: 25px;
+    box-shadow: 0 5px 18px rgba(30, 48, 80, 0.05);
+}
+
+.panel-heading {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 25px;
+}
+
+.panel-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    background: #edf3ff;
+    border-radius: 11px;
+    font-size: 22px;
+}
+
+.panel-heading h3 {
+    color: #26364d;
+    font-size: 17px;
+    margin-bottom: 5px;
+}
+
+.panel-heading p {
+    color: #8792a5;
+    font-size: 12px;
+}
+
+.ingreso-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.campo-ingreso {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.campo-completo {
+    grid-column: 1 / -1;
+}
+
+.campo-ingreso label {
+    color: #344054;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.campo-ingreso input,
+.campo-ingreso select,
+.campo-ingreso textarea {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid #dce2ec;
+    border-radius: 7px;
+    background: #fbfcfe;
+    color: #344054;
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.campo-ingreso input:focus,
+.campo-ingreso select:focus,
+.campo-ingreso textarea:focus {
+    border-color: #4388e8;
+    box-shadow: 0 0 0 3px rgba(67, 136, 232, 0.12);
+    background: white;
+}
+
+.campo-ingreso input[readonly] {
+    background: #edf0f5;
+    color: #758198;
+    cursor: not-allowed;
+}
+
+.campo-ingreso textarea {
+    resize: vertical;
+}
+
+.panel-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 22px;
+}
+
+.btn-agregar,
+.btn-guardar,
+.btn-regresar {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-agregar {
+    background: #2878dc;
+    color: white;
+}
+
+.btn-agregar:hover {
+    background: #1763bd;
+}
+
+.nota-ingreso {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+    padding: 13px;
+    background: #f0f6ff;
+    border-radius: 8px;
+    color: #53657e;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.lista-ingreso-panel {
+    margin-top: 22px;
+}
+
+.tabla-contenedor {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.tabla-ingresos {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 650px;
+}
+
+.tabla-ingresos th {
+    padding: 13px 12px;
+    background: #f3f6fa;
+    color: #526176;
+    font-size: 12px;
+    text-align: left;
+}
+
+.tabla-ingresos td {
+    padding: 14px 12px;
+    border-bottom: 1px solid #edf0f4;
+    color: #344054;
+    font-size: 13px;
+}
+
+.fila-vacia {
+    text-align: center !important;
+    color: #98a2b3 !important;
+    padding: 30px !important;
+}
+
+.ingreso-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.btn-regresar {
+    background: #edf0f5;
+    color: #475467;
+}
+
+.btn-regresar:hover {
+    background: #dfe4ec;
+}
+
+.btn-guardar {
+    background: #16a36a;
+    color: white;
+}
+
+.btn-guardar:hover {
+    background: #108455;
+}
+
+/* DISEÑO RESPONSIVO */
+
+@media (max-width: 950px) {
+    .ingreso-paneles {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .ingreso-panel,
+    .lista-ingreso-panel {
+        padding: 18px;
+    }
+
+    .ingreso-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .campo-completo {
+        grid-column: auto;
+    }
+
+    .ingreso-footer {
+        flex-direction: column-reverse;
+    }
+
+    .ingreso-footer a,
+    .ingreso-footer button {
+        width: 100%;
+    }
+}
+
+/* RESUMEN DEL INGRESO */
+
+.resumen-ingreso {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 35px;
+    padding: 20px 5px;
+    border-top: 1px solid #e5eaf1;
+    margin-top: 15px;
+}
+
+.resumen-total {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    color: #667085;
+    font-size: 13px;
+}
+
+.resumen-total strong {
+    color: #344054;
+    font-size: 18px;
+}
+
+.resumen-principal strong {
+    color: #16a36a;
+    font-size: 25px;
+}
+
+.btn-tabla {
+    border: none;
+    padding: 7px 10px;
+    margin: 2px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.btn-editar {
+    background: #e8f1ff;
+    color: #2878dc;
+}
+
+.btn-eliminar {
+    background: #ffebeb;
+    color: #d92d20;
+}
+
+.btn-tabla:hover {
+    opacity: 0.8;
 }
