@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\EncargadoLoginController;
+use App\Http\Controllers\Encargado\IngresoInventarioController;
 
 // Página principal pública.
 Route::get('/', function () {
@@ -20,7 +21,6 @@ Route::prefix('encargado')->name('encargado.')->group(function () {
     Route::post('/logout', [EncargadoLoginController::class, 'destroy'])
         ->middleware('auth')
         ->name('logout');
-
 });
 
 // Rutas privadas del inventario.
@@ -33,12 +33,19 @@ Route::middleware(['auth', 'rol:encargado_inventario'])
             return view('encargado.inventario.index');
         })->name('index');
 
-        Route::get('/ingresos', function () {
-            return view('encargado.inventario.ingreso');
-        })->name('ingresos');
+        // Mostrar módulo de ingresos.
+        Route::get('/ingresos', [
+            IngresoInventarioController::class,
+            'index'
+        ])->name('ingresos');
+
+        // Buscar producto por código.
+        Route::get('/productos/buscar/{codigo}', [
+            IngresoInventarioController::class,
+            'buscarProducto'
+        ])->name('productos.buscar');
 
         Route::get('/alertas', function () {
             return view('encargado.inventario.alertas');
         })->name('alertas');
-
     });

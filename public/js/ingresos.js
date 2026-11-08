@@ -21,55 +21,205 @@ document.addEventListener('DOMContentLoaded', function () {
     const totalIngreso = document.getElementById('totalIngreso');
 
     // ==========================================
-    // 2. ARREGLO TEMPORAL DE PRODUCTOS
+    // 2. VARIABLES DE CONTROL
     // ==========================================
 
+    // Arreglo temporal donde guardaremos los productos.
     let productosIngreso = [];
 
-    // Esta variable nos permitirá saber si estamos
-    // agregando un producto nuevo o editando uno de la lista.
+    // Identifica si estamos editando un producto de la lista.
     let indiceEdicion = null;
 
+    // Identifica si el producto existe en MySQL.
+    let productoEncontrado = false;
+    let idProductoEncontrado = null;
+
+    // Guarda el último código que fue consultado.
+    let codigoConsultado = '';
+
     // ==========================================
-    // 3. AGREGAR PRODUCTO A LA LISTA
+    // 3. BUSCAR PRODUCTOS EN LARAVEL
+    // ==========================================
+
+    // Buscar producto cuando se presiona Enter.
+    codigo.addEventListener('keydown', function (event) {
+
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            buscarProducto();
+        }
+
+    });
+
+    // Detectar cuando cambia el código del producto.
+    codigo.addEventListener('input', function () {
+
+        if (codigo.value.trim() !== codigoConsultado) {
+
+            productoEncontrado = false;
+            idProductoEncontrado = null;
+
+            limpiarDatosProducto();
+
+        }
+
+    });
+
+    // ==========================================
+    // 3.1 CONSULTAR PRODUCTO POR CÓDIGO
+    // ==========================================
+
+    async function buscarProducto() {
+
+        const valorCodigo = codigo.value.trim();
+
+        if (!valorCodigo) {
+            return;
+        }
+
+        try {
+
+            const respuesta = await fetch(
+                `/encargado/inventario/productos/buscar/${encodeURIComponent(valorCodigo)}`
+            );
+
+            if (!respuesta.ok) {
+                throw new Error('Error al consultar el producto.');
+            }
+
+            const datos = await respuesta.json();
+
+            codigoConsultado = valorCodigo;
+
+            if (datos.existe) {
+
+                const producto = datos.producto;
+
+                // Guardamos el ID del producto existente.
+                productoEncontrado = true;
+                idProductoEncontrado = producto.id;
+
+                // Recuperamos sus datos.
+                categoria.value = producto.categoria_id;
+                nombre.value = producto.nombre;
+                descripcion.value = producto.descripcion ?? '';
+                stockActual.value = producto.stock_actual;
+                stockMinimo.value = producto.stock_minimo;
+                precioVenta.value = producto.precio_venta;
+
+                alert('Producto encontrado. Datos recuperados.');
+
+            } else {
+
+                productoEncontrado = false;
+                idProductoEncontrado = null;
+
+                limpiarDatosProducto();
+
+                alert('Producto no encontrado. Puedes registrar uno nuevo.');
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert('No se pudo consultar el producto.');
+
+        }
+
+    }
+
+    // ==========================================
+    // 3.2 LIMPIAR DATOS DEL PRODUCTO
+    // ==========================================
+
+    function limpiarDatosProducto() {
+
+        categoria.value = '';
+        nombre.value = '';
+        descripcion.value = '';
+        stockActual.value = 0;
+        stockMinimo.value = 5;
+        precioVenta.value = '';
+
+    }
+
+    // ==========================================
+    // 4. AGREGAR PRODUCTO A LA LISTA
     // ==========================================
 
     btnAgregar.addEventListener('click', function () {
 
         // Recuperamos los valores del formulario.
         const producto = {
+
+            // ID de MySQL. Será null si es un producto nuevo.
+            productoId: productoEncontrado
+                ? idProductoEncontrado
+                : null,
+
             codigo: codigo.value.trim(),
+
             categoriaId: categoria.value,
+
             categoriaNombre: categoria.options[categoria.selectedIndex]?.text || '',
+
             nombre: nombre.value.trim(),
+
             descripcion: descripcion.value.trim(),
+
             stockActual: Number(stockActual.value),
+
             stockMinimo: Number(stockMinimo.value),
+
             cantidad: Number(cantidad.value),
+
             precioCosto: Number(precioCosto.value),
+
             precioVenta: Number(precioVenta.value)
+
         };
 
-        // Validamos los campos obligatorios.
+        // ==========================================
+        // 4.1 VALIDAR CAMPOS OBLIGATORIOS
+        // ==========================================
+
         if (
             !producto.codigo ||
             !producto.categoriaId ||
             !producto.nombre ||
-            !producto.cantidad ||
-            !producto.precioCosto ||
-            !producto.precioVenta ||
+
+            cantidad.value.trim() === '' ||
+            precioCosto.value.trim() === '' ||
+            precioVenta.value.trim() === '' ||
+
             !Number.isInteger(producto.cantidad) ||
             producto.cantidad < 1 ||
+
+            !Number.isFinite(producto.precioCosto) ||
             producto.precioCosto < 0 ||
+
+            !Number.isFinite(producto.precioVenta) ||
             producto.precioVenta < 0 ||
+
+            !Number.isInteger(producto.stockActual) ||
+            producto.stockActual < 0 ||
+
             !Number.isInteger(producto.stockMinimo) ||
             producto.stockMinimo < 0
         ) {
+
             alert('Completa correctamente los datos del producto.');
+
             return;
+
         }
 
-        // Evitamos agregar dos veces el mismo código.
+        // ==========================================
+        // 4.2 EVITAR CÓDIGOS DUPLICADOS
+        // ==========================================
+
         const codigoDuplicado = productosIngreso.some(
             (item, index) =>
                 item.codigo.toLowerCase() === producto.codigo.toLowerCase()
@@ -77,27 +227,43 @@ document.addEventListener('DOMContentLoaded', function () {
         );
 
         if (codigoDuplicado) {
+
             alert('Este producto ya está agregado a la lista.');
+
             return;
+
         }
 
-        // Si estamos editando, reemplazamos el producto.
+        // ==========================================
+        // 4.3 AGREGAR O ACTUALIZAR PRODUCTO
+        // ==========================================
+
         if (indiceEdicion !== null) {
+
+            // Actualizamos el producto seleccionado.
             productosIngreso[indiceEdicion] = producto;
+
             indiceEdicion = null;
+
             btnAgregar.textContent = '+ Agregar producto a la lista';
+
         } else {
-            // Si es nuevo, lo agregamos al arreglo.
+
+            // Agregamos un producto nuevo al arreglo.
             productosIngreso.push(producto);
+
         }
 
         // Actualizamos la tabla y los totales.
         mostrarProductos();
+
+        // Limpiamos el formulario.
         limpiarFormulario();
+
     });
 
     // ==========================================
-    // 4. MOSTRAR PRODUCTOS EN LA TABLA
+    // 5. MOSTRAR PRODUCTOS EN LA TABLA
     // ==========================================
 
     function mostrarProductos() {
@@ -105,94 +271,124 @@ document.addEventListener('DOMContentLoaded', function () {
         // Limpiamos el contenido anterior.
         listaProductos.innerHTML = '';
 
-        // Si no hay productos, mostramos el mensaje.
+        // Si no hay productos, mostramos un mensaje.
         if (productosIngreso.length === 0) {
 
             const fila = document.createElement('tr');
+
             fila.id = 'filaVacia';
 
             const celda = document.createElement('td');
+
             celda.colSpan = 6;
+
             celda.className = 'fila-vacia';
+
             celda.textContent = 'Todavía no has agregado productos.';
 
             fila.appendChild(celda);
+
             listaProductos.appendChild(fila);
 
         } else {
 
-            // Recorremos todos los productos agregados.
+            // Recorremos los productos agregados.
             productosIngreso.forEach(function (producto, index) {
 
                 const subtotal = producto.cantidad * producto.precioCosto;
 
                 const fila = document.createElement('tr');
 
-                // Código
+                // Código del producto.
                 agregarCelda(fila, producto.codigo);
 
-                // Nombre del producto
+                // Nombre del producto.
                 agregarCelda(fila, producto.nombre);
 
-                // Cantidad recibida
+                // Cantidad recibida.
                 agregarCelda(fila, producto.cantidad);
 
-                // Costo unitario
+                // Costo unitario.
                 agregarCelda(fila, formatoMoneda(producto.precioCosto));
 
-                // Subtotal
+                // Subtotal.
                 agregarCelda(fila, formatoMoneda(subtotal));
 
-                // Acciones
+                // ==========================================
+                // ACCIONES DE LA TABLA
+                // ==========================================
+
                 const celdaAcciones = document.createElement('td');
 
+                // Botón editar.
                 const btnEditar = document.createElement('button');
+
                 btnEditar.type = 'button';
+
                 btnEditar.textContent = 'Editar';
+
                 btnEditar.className = 'btn-tabla btn-editar';
 
                 btnEditar.addEventListener('click', function () {
+
                     editarProducto(index);
+
                 });
 
+                // Botón eliminar.
                 const btnEliminar = document.createElement('button');
+
                 btnEliminar.type = 'button';
+
                 btnEliminar.textContent = 'Quitar';
+
                 btnEliminar.className = 'btn-tabla btn-eliminar';
 
                 btnEliminar.addEventListener('click', function () {
+
                     eliminarProducto(index);
+
                 });
 
                 celdaAcciones.appendChild(btnEditar);
+
                 celdaAcciones.appendChild(btnEliminar);
 
                 fila.appendChild(celdaAcciones);
 
                 listaProductos.appendChild(fila);
+
             });
+
         }
 
-        // Actualizamos los totales generales.
+        // Actualizamos los totales.
         calcularTotales();
-    }
 
-    // Función auxiliar para agregar celdas de texto.
-    function agregarCelda(fila, valor) {
-
-        const celda = document.createElement('td');
-        celda.textContent = valor;
-
-        fila.appendChild(celda);
     }
 
     // ==========================================
-    // 5. CALCULAR TOTALES
+    // 5.1 AGREGAR CELDAS A LA TABLA
+    // ==========================================
+
+    function agregarCelda(fila, valor) {
+
+        const celda = document.createElement('td');
+
+        celda.textContent = valor;
+
+        fila.appendChild(celda);
+
+    }
+
+    // ==========================================
+    // 6. CALCULAR TOTALES
     // ==========================================
 
     function calcularTotales() {
 
         let unidades = 0;
+
         let total = 0;
 
         productosIngreso.forEach(function (producto) {
@@ -204,36 +400,64 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         totalUnidades.textContent = unidades;
+
         totalIngreso.textContent = formatoMoneda(total);
-    }
 
-    // Formato de moneda.
-    function formatoMoneda(valor) {
-
-        return new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD'
-        }).format(valor);
     }
 
     // ==========================================
-    // 6. EDITAR PRODUCTO DE LA LISTA
+    // 6.1 FORMATO DE MONEDA
+    // ==========================================
+
+    function formatoMoneda(valor) {
+
+        return new Intl.NumberFormat('en-US', {
+
+            style: 'currency',
+
+            currency: 'USD'
+
+        }).format(valor);
+
+    }
+
+    // ==========================================
+    // 7. EDITAR PRODUCTO DE LA LISTA
     // ==========================================
 
     function editarProducto(index) {
 
         const producto = productosIngreso[index];
 
+        // Recuperamos el identificador de MySQL.
+        productoEncontrado = producto.productoId != null;
+
+        idProductoEncontrado = productoEncontrado
+            ? producto.productoId
+            : null;
+
+        codigoConsultado = producto.codigo;
+
+        // Recuperamos los datos en el formulario.
         codigo.value = producto.codigo;
+
         categoria.value = producto.categoriaId;
+
         nombre.value = producto.nombre;
+
         descripcion.value = producto.descripcion;
+
         stockActual.value = producto.stockActual;
+
         stockMinimo.value = producto.stockMinimo;
+
         cantidad.value = producto.cantidad;
+
         precioCosto.value = producto.precioCosto;
+
         precioVenta.value = producto.precioVenta;
 
+        // Guardamos el índice que estamos editando.
         indiceEdicion = index;
 
         btnAgregar.textContent = 'Actualizar producto de la lista';
@@ -244,7 +468,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // ==========================================
-    // 7. ELIMINAR PRODUCTO DE LA LISTA
+    // 8. ELIMINAR PRODUCTO DE LA LISTA
     // ==========================================
 
     function eliminarProducto(index) {
@@ -257,45 +481,69 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
+        // Eliminamos el producto del arreglo.
         productosIngreso.splice(index, 1);
 
-        // Si se elimina el producto que se estaba editando,
+        // Si eliminamos el producto que se estaba editando,
         // cancelamos la edición.
         if (indiceEdicion === index) {
+
             indiceEdicion = null;
+
             btnAgregar.textContent = '+ Agregar producto a la lista';
+
             limpiarFormulario();
+
         } else if (indiceEdicion !== null && indiceEdicion > index) {
+
             indiceEdicion--;
+
         }
 
+        // Actualizamos la tabla.
         mostrarProductos();
+
     }
 
     // ==========================================
-    // 8. LIMPIAR FORMULARIO
+    // 9. LIMPIAR FORMULARIO
     // ==========================================
 
     function limpiarFormulario() {
 
         codigo.value = '';
+
         categoria.value = '';
+
         nombre.value = '';
+
         descripcion.value = '';
+
         stockActual.value = 0;
+
         stockMinimo.value = 5;
+
         cantidad.value = '';
+
         precioCosto.value = '';
+
         precioVenta.value = '';
 
+        // Reiniciamos la identificación del producto.
+        productoEncontrado = false;
+
+        idProductoEncontrado = null;
+
+        codigoConsultado = '';
+
         codigo.focus();
+
     }
 
     // ==========================================
-    // 9. INICIALIZAR LA TABLA
+    // 10. INICIALIZAR LA TABLA
     // ==========================================
 
     mostrarProductos();
 
 });
-

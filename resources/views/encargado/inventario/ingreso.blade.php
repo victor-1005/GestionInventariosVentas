@@ -42,10 +42,10 @@
 
                     <div class="campo-ingreso">
                         <label for="categoria_id">Categoría</label>
-                        <select id="categoria_id">
+                        <select id="categoria_id" name="categoria_id" required>
                             <option value="">Seleccionar categoría</option>
-                            <option value="s">s</option>
-                            @foreach(($categorias ?? []) as $categoria)
+
+                            @foreach($categorias as $categoria)
                             <option value="{{ $categoria->id }}">
                                 {{ $categoria->nombre_categoria }}
                             </option>
@@ -136,10 +136,10 @@
 
                     <div class="campo-ingreso campo-completo">
                         <label for="proveedor_id">Proveedor</label>
-                        <select id="proveedor_id" name="proveedor_id">
-                            <option value="s">s</option>
+                        <select id="proveedor_id" name="proveedor_id" required>
                             <option value="">Seleccionar proveedor</option>
-                            @foreach(($proveedores ?? []) as $proveedor)
+
+                            @foreach($proveedores as $proveedor)
                             <option value="{{ $proveedor->id }}">
                                 {{ $proveedor->nombre_entidad }}
                             </option>
@@ -218,4 +218,4 @@
 
 @endsection
 <!-- para el js -->
- <script src="{{ asset('js/ingresos.js') }}"></script>
+<script src="{{ asset('js/ingresos.js') }}"></script>
