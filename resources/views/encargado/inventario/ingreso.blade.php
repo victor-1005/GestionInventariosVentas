@@ -16,7 +16,7 @@
     </div>
 
     {{-- FORMULARIO GENERAL --}}
-    <form id="formIngreso" method="POST" action="#">
+    <form id="formIngreso" method="POST" action="{{ route('encargado.inventario.ingresos.guardar') }}">
         @csrf
 
         <div class="ingreso-paneles">
@@ -42,7 +42,7 @@
 
                     <div class="campo-ingreso">
                         <label for="categoria_id">Categoría</label>
-                        <select id="categoria_id" name="categoria_id" required>
+                        <select id="categoria_id" name="categoria_id" >
                             <option value="">Seleccionar categoría</option>
 
                             @foreach($categorias as $categoria)
@@ -209,8 +209,16 @@
                 </div>
             </div>
 
+            {{-- ACCIONES DEL INGRESO --}}
+            <div class="panel-actions">
 
+                <button type="submit" id="btnGuardarIngreso" class="btn-agregar">
+                    Guardar ingreso de inventario
+                </button>
+
+            </div>
         </section>
+
 
     </form>
 

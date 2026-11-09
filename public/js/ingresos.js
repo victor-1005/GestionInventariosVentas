@@ -17,6 +17,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnAgregar = document.getElementById('btnAgregarProducto');
     const listaProductos = document.getElementById('listaProductos');
 
+    const formIngreso = document.getElementById('formIngreso');
+    const btnGuardarIngreso = document.getElementById('btnGuardarIngreso');
+
     const totalUnidades = document.getElementById('totalUnidades');
     const totalIngreso = document.getElementById('totalIngreso');
 
@@ -540,10 +543,135 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
+
     // ==========================================
-    // 10. INICIALIZAR LA TABLA
+    // 10. GUARDAR INGRESO EN LA BASE DE DATOS
+    // ==========================================
+
+    formIngreso.addEventListener('submit', async function (event) {
+
+        event.preventDefault();
+
+        // Evitar guardar una lista vacía.
+        if (productosIngreso.length === 0) {
+            alert('Agrega al menos un producto a la lista.');
+            return;
+        }
+
+        // Recuperar información general del ingreso.
+        const numeroDocumento = document.getElementById('numero_documento').value.trim();
+        const fechaIngreso = document.getElementById('fecha_ingreso').value;
+        const proveedorId = document.getElementById('proveedor_id').value;
+
+        // Validar encabezado.
+        if (!numeroDocumento || !fechaIngreso || !proveedorId) {
+            alert('Completa los datos del documento y proveedor.');
+            return;
+        }
+
+        // Obtener token CSRF.
+        const token = formIngreso.querySelector('input[name="_token"]').value;
+
+        // Preparar información para Laravel.
+        const datosIngreso = {
+            numero_documento: numeroDocumento,
+            fecha_ingreso: fechaIngreso,
+            proveedor_id: proveedorId,
+            productos: productosIngreso.map(producto => ({
+                codigo: producto.codigo,
+                categoriaId: producto.categoriaId,
+                nombre: producto.nombre,
+                descripcion: producto.descripcion,
+                cantidad: producto.cantidad,
+                precioCosto: producto.precioCosto,
+                precioVenta: producto.precioVenta,
+                stockMinimo: producto.stockMinimo
+            }))
+        };
+
+        try {
+
+            // Deshabilitar botón mientras se guarda.
+            btnGuardarIngreso.disabled = true;
+            btnGuardarIngreso.textContent = 'Guardando ingreso...';
+
+            const respuesta = await fetch(formIngreso.action, {
+
+                method: 'POST',
+
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': token
+                },
+
+                body: JSON.stringify(datosIngreso)
+
+            });
+
+            const resultado = await respuesta.json();
+
+            // Si Laravel devuelve errores de validación.
+            if (!respuesta.ok) {
+
+                if (respuesta.status === 422 && resultado.errors) {
+
+                    const mensajes = Object.values(resultado.errors)
+                        .flat()
+                        .join('\n');
+
+                    alert('No se pudo guardar el ingreso:\n' + mensajes);
+
+                } else {
+
+                    alert(resultado.mensaje || 'Ocurrió un error al guardar el ingreso.');
+
+                }
+
+                return;
+            }
+
+            // Confirmar guardado.
+            alert(resultado.mensaje);
+
+            // Limpiar lista provisional.
+            productosIngreso = [];
+
+            indiceEdicion = null;
+
+            mostrarProductos();
+
+            limpiarFormulario();
+
+            // Limpiar información del documento.
+            document.getElementById('numero_documento').value = '';
+            document.getElementById('fecha_ingreso').value = '';
+            document.getElementById('proveedor_id').value = '';
+
+            btnAgregar.textContent = '+ Agregar producto a la lista';
+
+        } catch (error) {
+
+            console.error('Error al guardar ingreso:', error);
+
+            alert('No fue posible comunicarse con el servidor.');
+
+        } finally {
+
+            btnGuardarIngreso.disabled = false;
+            btnGuardarIngreso.textContent = '💾 Guardar ingreso en la BD';
+
+        }
+
+    });
+
+
+    // ==========================================
+    // 11. INICIALIZAR LA TABLA
     // ==========================================
 
     mostrarProductos();
 
 });
+
+

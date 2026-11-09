@@ -45,6 +45,12 @@ Route::middleware(['auth', 'rol:encargado_inventario'])
             'buscarProducto'
         ])->name('productos.buscar');
 
+        // Guardar ingreso de inventario.
+        Route::post('/ingresos/guardar', [
+            IngresoInventarioController::class,
+            'guardar'
+        ])->name('ingresos.guardar');
+
         Route::get('/alertas', function () {
             return view('encargado.inventario.alertas');
         })->name('alertas');
