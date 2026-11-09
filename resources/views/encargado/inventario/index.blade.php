@@ -77,7 +77,7 @@
 
         <div class="inventory-actions">
 
-            <a href="{{ route('encargado.inventario.index') }}"
+            <a href="{{ route('encargado.inventario.existencias') }}"
                class="inventory-action-card">
 
                 <span class="inventory-action-icon">📋</span>

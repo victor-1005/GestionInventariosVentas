@@ -1156,3 +1156,340 @@ body {
 .btn-tabla:hover {
     opacity: 0.8;
 }
+
+/* ==========================================
+   11. MÓDULO DE EXISTENCIAS
+========================================== */
+
+.existencias-wrapper,
+.editar-producto-wrapper {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+.existencias-heading,
+.editar-producto-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.existencias-heading h2,
+.editar-producto-heading h2 {
+    color: #1d2939;
+    font-size: 25px;
+    margin-bottom: 7px;
+}
+
+.existencias-heading p,
+.editar-producto-heading p {
+    color: #758198;
+    font-size: 14px;
+}
+
+.btn-existencia-regresar {
+    display: inline-block;
+    padding: 11px 16px;
+    background: #edf0f5;
+    color: #475467;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.btn-existencia-regresar:hover {
+    background: #dfe4ec;
+}
+
+/* MENSAJES */
+
+.mensaje-existencia {
+    padding: 14px 17px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.mensaje-exito {
+    background: #e9f8ef;
+    border: 1px solid #b7e5c7;
+    color: #167443;
+}
+
+.mensaje-error {
+    background: #fff1f1;
+    border: 1px solid #f2c5c5;
+    color: #a52a2a;
+}
+
+.mensaje-error ul {
+    padding-left: 20px;
+    margin-top: 7px;
+}
+
+/* ESTADÍSTICAS */
+
+.existencias-estadisticas {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.existencia-stat {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 22px;
+    background: white;
+    border: 1px solid #e7eaf1;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(30, 48, 80, 0.04);
+}
+
+.existencia-stat > span {
+    font-size: 30px;
+}
+
+.existencia-stat p {
+    color: #758198;
+    font-size: 13px;
+    margin-bottom: 7px;
+}
+
+.existencia-stat h3 {
+    color: #263954;
+    font-size: 25px;
+}
+
+/* PANEL PRINCIPAL */
+
+.existencias-panel,
+.editar-producto-panel {
+    padding: 25px;
+    background: white;
+    border: 1px solid #e5eaf1;
+    border-radius: 13px;
+    box-shadow: 0 5px 18px rgba(30, 48, 80, 0.05);
+}
+
+.existencias-panel-heading {
+    margin-bottom: 20px;
+}
+
+.existencias-panel-heading h3 {
+    color: #26364d;
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+
+.existencias-panel-heading p {
+    color: #8792a5;
+    font-size: 13px;
+}
+
+/* BUSCADOR */
+
+.buscador-existencias {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.buscador-existencias input {
+    flex: 1;
+    min-width: 0;
+    padding: 12px 14px;
+    border: 1px solid #dce2ec;
+    border-radius: 8px;
+    outline: none;
+    font-size: 13px;
+}
+
+.buscador-existencias input:focus {
+    border-color: #4388e8;
+    box-shadow: 0 0 0 3px rgba(67, 136, 232, 0.12);
+}
+
+.buscador-existencias button {
+    padding: 11px 17px;
+    background: #2878dc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.buscador-existencias button:hover {
+    background: #1763bd;
+}
+
+.buscador-existencias a {
+    display: flex;
+    align-items: center;
+    color: #527de0;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+/* TABLA */
+
+.tabla-existencias {
+    width: 100%;
+    min-width: 1050px;
+    border-collapse: collapse;
+}
+
+.tabla-existencias th {
+    padding: 14px 12px;
+    background: #f3f6fa;
+    color: #526176;
+    font-size: 12px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.tabla-existencias td {
+    padding: 14px 12px;
+    border-bottom: 1px solid #edf0f4;
+    color: #344054;
+    font-size: 12px;
+}
+
+.tabla-existencias tbody tr:hover {
+    background: #fafcff;
+}
+
+.existencias-vacias {
+    text-align: center;
+    padding: 35px !important;
+    color: #98a2b3 !important;
+}
+
+/* ESTADO DEL STOCK */
+
+.estado-stock {
+    display: inline-block;
+    padding: 6px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.estado-bajo {
+    background: #fff1e5;
+    color: #c76a13;
+}
+
+.estado-disponible {
+    background: #e9f8ef;
+    color: #16834a;
+}
+
+/* BOTONES DE ACCIONES */
+
+.acciones-existencia {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.acciones-existencia form {
+    margin: 0;
+}
+
+.btn-accion-editar,
+.btn-accion-eliminar {
+    display: inline-block;
+    padding: 7px 9px;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 11px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.btn-accion-editar {
+    background: #e8f1ff;
+    color: #2878dc;
+}
+
+.btn-accion-eliminar {
+    background: #ffebeb;
+    color: #d92d20;
+}
+
+.btn-accion-editar:hover,
+.btn-accion-eliminar:hover {
+    opacity: 0.8;
+}
+
+/* PAGINACIÓN */
+
+.paginacion-existencias {
+    margin-top: 22px;
+}
+
+/* FORMULARIO DE EDICIÓN */
+
+.editar-producto-wrapper {
+    max-width: 1050px;
+}
+
+.editar-producto-panel {
+    padding: 30px;
+}
+
+.editar-producto-acciones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #e5eaf1;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+
+    .existencias-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .existencias-estadisticas {
+        grid-template-columns: 1fr;
+    }
+
+    .existencias-panel,
+    .editar-producto-panel {
+        padding: 17px;
+    }
+
+    .buscador-existencias {
+        flex-wrap: wrap;
+    }
+
+    .buscador-existencias input {
+        flex-basis: 100%;
+    }
+
+    .editar-producto-acciones {
+        flex-direction: column-reverse;
+    }
+
+    .editar-producto-acciones button,
+    .editar-producto-acciones a {
+        width: 100%;
+        text-align: center;
+    }
+
+}
