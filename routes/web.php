@@ -4,12 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\EncargadoLoginController;
 use App\Http\Controllers\Encargado\IngresoInventarioController;
 use App\Http\Controllers\Encargado\ExistenciasController;
+use App\Http\Controllers\Encargado\AlertasController;
+use App\Http\Controllers\InicioController;
 
 // Página principal pública.
-Route::get('/', function () {
-    return view('inicio');
-})->name('inicio');
-
+Route::get('/', [InicioController::class, 'index'])
+    ->name('inicio');
+    
 // Rutas de autenticación del encargado.
 Route::prefix('encargado')->name('encargado.')->group(function () {
 
@@ -52,9 +53,11 @@ Route::middleware(['auth', 'rol:encargado_inventario'])
             'guardar'
         ])->name('ingresos.guardar');
 
-        Route::get('/alertas', function () {
-            return view('encargado.inventario.alertas');
-        })->name('alertas');
+        //Para las alertas de stock
+        Route::get('/alertas', [
+            AlertasController::class,
+            'index'
+        ])->name('alertas');
 
         // Para las existencias
         Route::get('/existencias', [
@@ -67,7 +70,7 @@ Route::middleware(['auth', 'rol:encargado_inventario'])
             ExistenciasController::class,
             'editar'
         ])->name('existencias.editar');
-        
+
         //Actualizar
         Route::put('/existencias/{id}', [
             ExistenciasController::class,
