@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -26,20 +27,36 @@ class EncargadoLoginController extends Controller
 
         if (Auth::attempt($credenciales)) {
 
-            if (Auth::user()->rol !== 'encargado_inventario') {
-                Auth::logout();
+            $usuario = Auth::user();
 
-                $request->session()->invalidate();
-                $request->session()->regenerateToken();
+            // Redireccionar según el rol.
+            if ($usuario->rol === 'encargado_inventario') {
 
-                return back()->withErrors([
-                    'usuario' => 'No tienes permiso para acceder al módulo de inventario.',
-                ])->onlyInput('usuario');
+                $request->session()->regenerate();
+
+                return redirect()->route(
+                    'encargado.inventario.index'
+                );
             }
 
-            $request->session()->regenerate();
+            if ($usuario->rol === 'encargado_ventas') {
 
-            return redirect()->route('encargado.inventario.index');
+                $request->session()->regenerate();
+
+                return redirect()->route(
+                    'encargado.ventas.index'
+                );
+            }
+
+            // Si el usuario no tiene un rol autorizado.
+            Auth::logout();
+
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return back()->withErrors([
+                'usuario' => 'No tienes un rol autorizado para ingresar.',
+            ])->onlyInput('usuario');
         }
 
         return back()->withErrors([

@@ -18,7 +18,7 @@
         <h2>Bienvenido</h2>
 
         <p class="login-description">
-            Ingresa tus credenciales para acceder al módulo de inventario.
+            Ingresa tus credenciales para acceder a tu modulo correspondiente.
         </p>
 
         @if ($errors->any())

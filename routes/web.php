@@ -83,3 +83,15 @@ Route::middleware(['auth', 'rol:encargado_inventario'])
             'eliminar'
         ])->name('existencias.eliminar');
     });
+
+    // RUTAS PRIVADAS DE VENTAS
+Route::middleware(['auth', 'rol:encargado_ventas'])
+    ->prefix('encargado/ventas')
+    ->name('encargado.ventas.')
+    ->group(function () {
+
+        Route::get('/', function () {
+            return view('encargado.ventas.index');
+        })->name('index');
+
+    });

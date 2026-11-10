@@ -96,7 +96,7 @@
             <p>Controla las entradas y existencias.</p>
         </a>
 
-        <a href="#" class="access-card">
+        <a href="{{ route('encargado.login') }}" class="access-card">
             <span class="access-icon">🛒</span>
             <h3>Ventas</h3>
             <p>Registra y consulta las ventas.</p>

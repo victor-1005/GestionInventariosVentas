@@ -25,4 +25,8 @@ class User extends Authenticatable
     {
         return 'contrasena';
     }
+     public function ventas()
+    {
+        return $this->hasMany(Venta::class, 'usuario_id');
+    }
 }
