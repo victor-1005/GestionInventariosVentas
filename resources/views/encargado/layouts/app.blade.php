@@ -6,14 +6,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>@yield('titulo', 'Panel de Inventario')</title>
+    <title>@yield('titulo', 'Panel del encargado')</title>
 
     <link rel="stylesheet" href="{{ asset('css/stilos.css') }}">
 </head>
 
 <body>
 
-    <!-- Menú privado del encargado -->
+    <!-- MENÚ LATERAL -->
     <aside class="sidebar">
 
         <div class="sidebar-header">
@@ -23,21 +23,36 @@
 
         <nav class="sidebar-menu">
 
-            <a href="{{ route('encargado.inventario.index') }}" class="menu-link">
-                Inicio
-            </a>
+            @if(auth()->user()->rol === 'encargado_inventario')
 
-            <a href="{{ route('encargado.inventario.index') }}" class="menu-link">
-                Existencias
-            </a>
+                <a href="{{ route('encargado.inventario.index') }}"
+                   class="menu-link">
+                    Inicio
+                </a>
 
-            <a href="{{ route('encargado.inventario.ingresos') }}" class="menu-link">
-                Ingresos
-            </a>
+                <a href="{{ route('encargado.inventario.index') }}"
+                   class="menu-link">
+                    Existencias
+                </a>
 
-            <a href="{{ route('encargado.inventario.alertas') }}" class="menu-link">
-                Alertas de stock
-            </a>
+                <a href="{{ route('encargado.inventario.ingresos') }}"
+                   class="menu-link">
+                    Ingresos
+                </a>
+
+                <a href="{{ route('encargado.inventario.alertas') }}"
+                   class="menu-link">
+                    Alertas de stock
+                </a>
+
+            @elseif(auth()->user()->rol === 'encargado_ventas')
+
+                <a href="{{ route('encargado.ventas.index') }}"
+                   class="menu-link">
+                    Nueva venta
+                </a>
+
+            @endif
 
         </nav>
 
@@ -45,20 +60,25 @@
 
             <p>Sesión del encargado</p>
 
+            <p>{{ auth()->user()->nombre }}</p>
+
             <form method="POST" action="{{ route('encargado.logout') }}">
                 @csrf
-                <button type="submit">Cerrar sesión</button>
+
+                <button type="submit">
+                    Cerrar sesión
+                </button>
             </form>
 
         </div>
 
     </aside>
 
-    <!-- Contenido principal -->
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="main-content">
 
         <header class="topbar">
-            <h1>@yield('encabezado', 'Inventario')</h1>
+            <h1>@yield('encabezado', 'Inicio')</h1>
         </header>
 
         <section class="page-content">
@@ -66,6 +86,6 @@
         </section>
 
     </main>
-
+@yield('scripts')
 </body>
 </html>

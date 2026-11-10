@@ -1493,3 +1493,100 @@ body {
     }
 
 }
+
+/* =========================================
+   11. ALERTAS DE STOCK - MÓDULO DE VENTAS
+========================================= */
+
+.alertas-stock-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.alerta-stock-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 13px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+}
+
+.alerta-stock-item > div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.alerta-stock-item strong {
+    color: #344054;
+    font-size: 13px;
+}
+
+.alerta-stock-item small {
+    color: #758198;
+    font-size: 11px;
+}
+
+.alerta-stock-agotado {
+    background: #fff1f1;
+    border-color: #f2c5c5;
+}
+
+.alerta-stock-bajo {
+    background: #fff8e8;
+    border-color: #f5dfaa;
+}
+
+.stock-estado {
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: bold;
+    color: #a52a2a;
+}
+
+.alerta-stock-bajo .stock-estado {
+    color: #a66b13;
+}
+
+.alertas-sin-datos {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px;
+    background: #e9f8ef;
+    border-radius: 8px;
+    color: #247344;
+    font-size: 13px;
+}
+
+.btn-quitar {
+    background: #fff0f0;
+    color: #c03939;
+}
+
+.btn-quitar:hover {
+    background: #ffdddd;
+}
+
+.btn-guardar:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+
+    .alerta-stock-item {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .stock-estado {
+        align-self: flex-start;
+    }
+
+}

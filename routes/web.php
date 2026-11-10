@@ -6,6 +6,7 @@ use App\Http\Controllers\Encargado\IngresoInventarioController;
 use App\Http\Controllers\Encargado\ExistenciasController;
 use App\Http\Controllers\Encargado\AlertasController;
 use App\Http\Controllers\InicioController;
+use App\Http\Controllers\Encargado\VentasController;
 
 // Página principal pública.
 Route::get('/', [InicioController::class, 'index'])
@@ -25,7 +26,9 @@ Route::prefix('encargado')->name('encargado.')->group(function () {
         ->name('logout');
 });
 
-// Rutas privadas del inventario.
+// ==========================================
+// RUTAS PRIVADAS DE INVENTARIOS
+// ==========================================
 Route::middleware(['auth', 'rol:encargado_inventario'])
     ->prefix('encargado/inventario')
     ->name('encargado.inventario.')
@@ -84,14 +87,32 @@ Route::middleware(['auth', 'rol:encargado_inventario'])
         ])->name('existencias.eliminar');
     });
 
-    // RUTAS PRIVADAS DE VENTAS
+
+// ==========================================
+// RUTAS PRIVADAS DE VENTAS
+// ==========================================
 Route::middleware(['auth', 'rol:encargado_ventas'])
     ->prefix('encargado/ventas')
     ->name('encargado.ventas.')
     ->group(function () {
 
-        Route::get('/', function () {
-            return view('encargado.ventas.index');
-        })->name('index');
+        // Pantalla principal de ventas.
+        Route::get('/', [
+            VentasController::class,
+            'index'
+        ])->name('index');
+
+        // Buscar producto por código.
+        Route::get('/productos/buscar/{codigo}', [
+            VentasController::class,
+            'buscarProducto'
+        ])->name('productos.buscar');
+
+        // Guardar transacción.
+        Route::post('/guardar', [
+            VentasController::class,
+            'guardar'
+        ])->name('guardar');
 
     });
+
