@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\IngresoInventario;
+use App\Models\Venta;
 
 class ReportesController extends Controller
 {
@@ -19,10 +20,24 @@ class ReportesController extends Controller
             'usuario',
             'detalles.producto'
         ])
-        ->orderByDesc('fecha_ingreso')
-        ->orderByDesc('id')
-        ->paginate(10);
+            ->orderByDesc('fecha_ingreso')
+            ->orderByDesc('id')
+            ->paginate(10);
 
         return view('reportes.ingresos', compact('ingresos'));
+    }
+
+    // Reporte de salidas (ventas)
+    public function salidas()
+    {
+        $ventas = Venta::with([
+            'usuario',
+            'detalles.producto'
+        ])
+            ->orderByDesc('fecha')
+            ->orderByDesc('id')
+            ->paginate(10);
+
+        return view('reportes.salidas', compact('ventas'));
     }
 }

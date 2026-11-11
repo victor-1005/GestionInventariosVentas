@@ -37,7 +37,7 @@
 
 
         <!-- Reporte de salidas -->
-        <a href="# "
+        <a href="{{ route('reportes.salidas') }}"
            class="access-card">
 
             <span class="access-icon">📤</span>

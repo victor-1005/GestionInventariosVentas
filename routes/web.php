@@ -19,11 +19,21 @@ Route::get('/', [InicioController::class, 'index'])
 // Pagina de reportes
 Route::get('/reportes', [ReportesController::class, 'index'])
     ->name('reportes.index');
-    //Pagina de ingresos de reporteria
+
+//Pagina de ingresos de reporteria
 Route::get('/reportes/ingresos',
     [ReportesController::class, 'ingresos']
 )->name('reportes.ingresos');
+
+//Pagina de salidas de reporteria
+
+Route::get('/reportes/salidas',
+    [ReportesController::class, 'salidas']
+)->name('reportes.salidas');
+
+// ==========================================
 // Rutas de autenticación del encargado.
+// ==========================================
 Route::prefix('encargado')->name('encargado.')->group(function () {
 
     Route::get('/login', [EncargadoLoginController::class, 'create'])
