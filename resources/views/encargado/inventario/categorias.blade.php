@@ -20,10 +20,17 @@
 
     {{-- MENSAJE DE ÉXITO --}}
     @if(session('success'))
-        <div class="nota-ingreso">
-            <span>✅</span>
-            <p>{{ session('success') }}</p>
-        </div>
+    <div class="nota-ingreso">
+        <span>✅</span>
+        <p>{{ session('success') }}</p>
+    </div>
+    @endif
+    {{-- MENSAJE DE ERROR --}}
+    @if(session('error'))
+    <div class="nota-ingreso">
+        <span>⚠️</span>
+        <p>{{ session('error') }}</p>
+    </div>
     @endif
 
     {{-- FORMULARIO --}}
@@ -39,8 +46,7 @@
 
         <form
             method="POST"
-            action="{{ route('encargado.inventario.categorias.guardar') }}"
-        >
+            action="{{ route('encargado.inventario.categorias.guardar') }}">
 
             @csrf
 
@@ -59,11 +65,10 @@
                         value="{{ old('nombre_categoria') }}"
                         placeholder="Ej. Electrónica"
                         maxlength="100"
-                        required
-                    >
+                        required>
 
                     @error('nombre_categoria')
-                        <small class="error-text">{{ $message }}</small>
+                    <small class="error-text">{{ $message }}</small>
                     @enderror
 
                 </div>
@@ -78,11 +83,10 @@
                         id="descripcion_categoria"
                         name="descripcion_categoria"
                         rows="3"
-                        placeholder="Describe brevemente esta categoría..."
-                    >{{ old('descripcion_categoria') }}</textarea>
+                        placeholder="Describe brevemente esta categoría...">{{ old('descripcion_categoria') }}</textarea>
 
                     @error('descripcion_categoria')
-                        <small class="error-text">{{ $message }}</small>
+                    <small class="error-text">{{ $message }}</small>
                     @enderror
 
                 </div>
@@ -123,6 +127,7 @@
                         <th>ID</th>
                         <th>Categoría</th>
                         <th>Descripción</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
 
@@ -130,25 +135,60 @@
 
                     @forelse($categorias as $categoria)
 
-                        <tr>
-                            <td>{{ $categoria->id }}</td>
+                    <tr>
 
-                            <td>
-                                {{ $categoria->nombre_categoria }}
-                            </td>
+                        <td>{{ $categoria->id }}</td>
 
-                            <td>
-                                {{ $categoria->descripcion_categoria ?? 'Sin descripción' }}
-                            </td>
-                        </tr>
+                        <td>
+                            {{ $categoria->nombre_categoria }}
+                        </td>
+
+                        <td>
+                            {{ $categoria->descripcion_categoria ?? 'Sin descripción' }}
+                        </td>
+
+                        <td>
+
+                            {{-- BOTÓN EDITAR --}}
+                            <a
+                                href="{{ route(
+                'encargado.inventario.categorias.editar',
+                $categoria->id
+            ) }}"
+                                class="btn-editar">
+                                ✏️ Editar
+                            </a>
+
+                            {{-- BOTÓN ELIMINAR --}}
+                            <form
+                                action="{{ route(
+                'encargado.inventario.categorias.eliminar',
+                $categoria->id
+            ) }}"
+                                method="POST"
+                                style="display:inline;"
+                                onsubmit="return confirm('¿Estás seguro de eliminar esta categoría?');">
+
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit" class="btn-eliminar">
+                                    🗑️ Eliminar
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
 
                     @empty
 
-                        <tr>
-                            <td colspan="3" class="fila-vacia">
-                                Todavía no hay categorías registradas.
-                            </td>
-                        </tr>
+                    <tr>
+                        <td colspan="4" class="fila-vacia">
+                            Todavía no hay categorías registradas.
+                        </td>
+                    </tr>
 
                     @endforelse
 

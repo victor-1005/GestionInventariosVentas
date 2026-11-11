@@ -20,12 +20,18 @@
 
     {{-- MENSAJE DE ÉXITO --}}
     @if(session('success'))
-        <div class="nota-ingreso">
-            <span>✅</span>
-            <p>{{ session('success') }}</p>
-        </div>
+    <div class="nota-ingreso">
+        <span>✅</span>
+        <p>{{ session('success') }}</p>
+    </div>
     @endif
-
+    {{-- MENSAJE DE ERROR --}}
+    @if(session('error'))
+    <div class="nota-ingreso">
+        <span>⚠️</span>
+        <p>{{ session('error') }}</p>
+    </div>
+    @endif
     {{-- FORMULARIO --}}
     <section class="ingreso-panel">
 
@@ -39,8 +45,7 @@
 
         <form
             method="POST"
-            action="{{ route('encargado.inventario.proveedores.guardar') }}"
-        >
+            action="{{ route('encargado.inventario.proveedores.guardar') }}">
 
             @csrf
 
@@ -59,11 +64,10 @@
                         value="{{ old('nombre_entidad') }}"
                         placeholder="Ej. Distribuidora Central"
                         maxlength="150"
-                        required
-                    >
+                        required>
 
                     @error('nombre_entidad')
-                        <small class="error-text">{{ $message }}</small>
+                    <small class="error-text">{{ $message }}</small>
                     @enderror
 
                 </div>
@@ -81,11 +85,10 @@
                         value="{{ old('telefono_contacto') }}"
                         placeholder="Ej. 2222-2222"
                         maxlength="25"
-                        required
-                    >
+                        required>
 
                     @error('telefono_contacto')
-                        <small class="error-text">{{ $message }}</small>
+                    <small class="error-text">{{ $message }}</small>
                     @enderror
 
                 </div>
@@ -103,11 +106,10 @@
                         value="{{ old('correo') }}"
                         placeholder="proveedor@ejemplo.com"
                         maxlength="150"
-                        required
-                    >
+                        required>
 
                     @error('correo')
-                        <small class="error-text">{{ $message }}</small>
+                    <small class="error-text">{{ $message }}</small>
                     @enderror
 
                 </div>
@@ -147,6 +149,7 @@
                         <th>Proveedor</th>
                         <th>Teléfono</th>
                         <th>Correo</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
 
@@ -154,31 +157,58 @@
 
                     @forelse($proveedores as $proveedor)
 
-                        <tr>
+                    <tr>
 
-                            <td>{{ $proveedor->id }}</td>
+                        <td>{{ $proveedor->id }}</td>
 
-                            <td>
-                                {{ $proveedor->nombre_entidad }}
-                            </td>
+                        <td>
+                            {{ $proveedor->nombre_entidad }}
+                        </td>
 
-                            <td>
-                                {{ $proveedor->telefono_contacto ?? 'No registrado' }}
-                            </td>
+                        <td>
+                            {{ $proveedor->telefono_contacto ?? 'No registrado' }}
+                        </td>
 
-                            <td>
-                                {{ $proveedor->correo ?? 'No registrado' }}
-                            </td>
+                        <td>
+                            {{ $proveedor->correo ?? 'No registrado' }}
+                        </td>
 
-                        </tr>
+                        <td>
+
+                            {{-- BOTÓN EDITAR --}}
+                            <a
+                                href="{{ route('encargado.inventario.proveedores.editar',$proveedor->id) }}"
+                                class="btn-editar">
+                                ✏️ Editar
+                            </a>
+
+                            {{-- BOTÓN ELIMINAR --}}
+                            <form
+                                action="{{ route('encargado.inventario.proveedores.eliminar',$proveedor->id) }}"
+                                method="POST"
+                                style="display:inline;"
+                                onsubmit="return confirm('¿Estás seguro de eliminar este proveedor?');">
+
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit" class="btn-eliminar">
+                                    🗑️ Eliminar
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
 
                     @empty
 
-                        <tr>
-                            <td colspan="4" class="fila-vacia">
-                                Todavía no hay proveedores registrados.
-                            </td>
-                        </tr>
+                    <tr>
+                        <td colspan="5" class="fila-vacia">
+                            Todavía no hay proveedores registrados.
+                        </td>
+                    </tr>
 
                     @endforelse
 

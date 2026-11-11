@@ -95,11 +95,29 @@ Route::middleware(['auth', 'rol:encargado_inventario'])
             'index'
         ])->name('categorias');
 
-        // Guardar nueva categoría.
+        // Guardar categoría.
         Route::post('/categorias/guardar', [
             CategoriaController::class,
             'guardar'
         ])->name('categorias.guardar');
+
+        // Mostrar formulario de edición.
+        Route::get('/categorias/{id}/editar', [
+            CategoriaController::class,
+            'editar'
+        ])->name('categorias.editar');
+
+        // Actualizar categoría.
+        Route::put('/categorias/{id}', [
+            CategoriaController::class,
+            'actualizar'
+        ])->name('categorias.actualizar');
+
+        // Eliminar categoría.
+        Route::delete('/categorias/{id}', [
+            CategoriaController::class,
+            'eliminar'
+        ])->name('categorias.eliminar');
 
         // PROVEEDORES
         // Mostrar proveedores.
@@ -108,11 +126,29 @@ Route::middleware(['auth', 'rol:encargado_inventario'])
             'index'
         ])->name('proveedores');
 
-        // Guardar nuevo proveedor.
+        // Guardar proveedor.
         Route::post('/proveedores/guardar', [
             ProveedorController::class,
             'guardar'
         ])->name('proveedores.guardar');
+
+        // Mostrar formulario de edición.
+        Route::get('/proveedores/{id}/editar', [
+            ProveedorController::class,
+            'editar'
+        ])->name('proveedores.editar');
+
+        // Actualizar proveedor.
+        Route::put('/proveedores/{id}', [
+            ProveedorController::class,
+            'actualizar'
+        ])->name('proveedores.actualizar');
+
+        // Eliminar proveedor.
+        Route::delete('/proveedores/{id}', [
+            ProveedorController::class,
+            'eliminar'
+        ])->name('proveedores.eliminar');
     });
 
 
