@@ -9,11 +9,20 @@ use App\Http\Controllers\InicioController;
 use App\Http\Controllers\Encargado\VentasController;
 use App\Http\Controllers\Encargado\CategoriaController;
 use App\Http\Controllers\Encargado\ProveedorController;
+use App\Http\Controllers\ReportesController;
+
 
 // Página principal pública.
 Route::get('/', [InicioController::class, 'index'])
     ->name('inicio');
 
+// Pagina de reportes
+Route::get('/reportes', [ReportesController::class, 'index'])
+    ->name('reportes.index');
+    //Pagina de ingresos de reporteria
+Route::get('/reportes/ingresos',
+    [ReportesController::class, 'ingresos']
+)->name('reportes.ingresos');
 // Rutas de autenticación del encargado.
 Route::prefix('encargado')->name('encargado.')->group(function () {
 
