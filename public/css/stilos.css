@@ -1650,3 +1650,311 @@ body {
 .btn-cancelar:hover {
     background: #475569;
 }
+
+
+/* ==========================================
+   MÓDULO DE GESTIÓN DE USUARIOS
+========================================== */
+
+.usuarios-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.usuarios-panel {
+    padding: 25px;
+    background: white;
+    border: 1px solid #e5eaf1;
+    border-radius: 13px;
+    box-shadow: 0 5px 18px rgba(30, 48, 80, 0.05);
+}
+
+.usuarios-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.usuarios-rol {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 20px;
+    background: #edf3ff;
+    color: #2878dc;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.usuarios-rol.ventas {
+    background: #e9f8ef;
+    color: #16834a;
+}
+
+/* FORMULARIOS */
+
+.form-card {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.form-group label {
+    color: #34445e;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 9px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #dce2ec;
+    border-radius: 8px;
+    background: #fbfcfe;
+    color: #253047;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #527de0;
+    box-shadow: 0 0 0 3px rgba(82, 125, 224, 0.13);
+    background: white;
+}
+
+.form-group input::placeholder {
+    color: #a0a9b8;
+}
+
+.error-message {
+    display: block;
+    color: #dc2626;
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+.form-divider {
+    border: 0;
+    border-top: 1px solid #e7eaf1;
+    margin: 28px 0;
+}
+
+.form-heading {
+    margin-bottom: 22px;
+}
+
+.form-heading h3 {
+    color: #263954;
+    font-size: 17px;
+    margin-bottom: 7px;
+}
+
+.form-heading p {
+    color: #758198;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.form-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 30px;
+    padding-top: 22px;
+    border-top: 1px solid #e7eaf1;
+}
+
+.form-buttons .btn-primary {
+    border: none;
+    background: #2878dc;
+    color: white;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.form-buttons .btn-primary:hover {
+    background: #1763bd;
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: 12px 22px;
+    background: #edf0f5;
+    color: #475467;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.btn-secondary:hover {
+    background: #dfe4ec;
+}
+
+/* TABLA DE USUARIOS */
+
+.table-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.table-actions .btn-primary {
+    background: #2878dc;
+    color: white;
+    font-size: 13px;
+}
+
+.table-actions .btn-primary:hover {
+    background: #1763bd;
+}
+
+.users-table-card {
+    padding: 0;
+    overflow: hidden;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.users-table {
+    width: 100%;
+    min-width: 650px;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.users-table thead {
+    background: #f3f6fa;
+}
+
+.users-table th {
+    padding: 16px;
+    color: #526176;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.users-table td {
+    padding: 16px;
+    border-bottom: 1px solid #edf0f4;
+    color: #344054;
+    font-size: 13px;
+}
+
+.users-table tbody tr {
+    transition: background 0.2s;
+}
+
+.users-table tbody tr:hover {
+    background: #fafcff;
+}
+
+.users-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.btn-edit {
+    display: inline-block;
+    padding: 8px 13px;
+    background: #e8f1ff;
+    color: #2878dc;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.btn-edit:hover {
+    background: #d5e5ff;
+}
+
+.empty-table {
+    text-align: center;
+    color: #98a2b3 !important;
+    padding: 35px !important;
+}
+
+.pagination-container {
+    margin-top: 22px;
+}
+
+/* MENSAJE DE ÉXITO */
+
+.success-message {
+    padding: 14px 17px;
+    margin-bottom: 20px;
+    border: 1px solid #b7e5c7;
+    border-radius: 8px;
+    background: #e9f8ef;
+    color: #167443;
+    font-size: 13px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+
+    .form-card {
+        padding: 20px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .form-buttons {
+        flex-direction: column;
+    }
+
+    .form-buttons button,
+    .form-buttons a {
+        width: 100%;
+        text-align: center;
+    }
+
+    .table-actions {
+        justify-content: flex-start;
+    }
+
+    .usuarios-panel {
+        padding: 17px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .form-card {
+        padding: 17px;
+    }
+
+    .users-table th,
+    .users-table td {
+        padding: 12px;
+    }
+
+}

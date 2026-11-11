@@ -10,6 +10,7 @@ use App\Http\Controllers\Encargado\VentasController;
 use App\Http\Controllers\Encargado\CategoriaController;
 use App\Http\Controllers\Encargado\ProveedorController;
 use App\Http\Controllers\ReportesController;
+use App\Http\Controllers\UsuarioController;
 
 
 // Página principal pública.
@@ -197,3 +198,25 @@ Route::middleware(['auth', 'rol:encargado_ventas'])
             'guardar'
         ])->name('guardar');
     });
+
+// ==========================================
+// RUTAS De PAGINA DE USUARIOS
+// ==========================================
+// Administración de usuarios
+Route::get('/usuarios', [UsuarioController::class, 'index'])
+    ->name('usuarios.index');
+
+Route::get('/usuarios/crear', [UsuarioController::class, 'crear'])
+    ->name('usuarios.crear');
+
+Route::post('/usuarios', [UsuarioController::class, 'guardar'])
+    ->name('usuarios.guardar');
+
+Route::get('/usuarios/listar', [UsuarioController::class, 'listar'])
+    ->name('usuarios.listar');
+
+Route::get('/usuarios/{usuario}/editar', [UsuarioController::class, 'editar'])
+    ->name('usuarios.editar');
+
+Route::put('/usuarios/{usuario}', [UsuarioController::class, 'actualizar'])
+    ->name('usuarios.actualizar');

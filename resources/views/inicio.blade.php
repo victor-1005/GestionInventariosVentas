@@ -74,7 +74,7 @@
 
         <h3>Ventas</h3>
 
-        <p class="stat-number">0</p>
+        <p class="stat-number">{{ $totalVentas }}</p>
 
         <span>Ventas registradas</span>
 
@@ -158,7 +158,7 @@
 
 
         <!-- Crear usuarios -->
-        <a href="#" class="access-card">
+        <a href="{{ route('usuarios.index') }}" class="access-card">
 
             <span class="access-icon">👤</span>
 
