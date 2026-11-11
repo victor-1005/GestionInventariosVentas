@@ -1,4 +1,3 @@
-
 @extends('encargado.layouts.app')
 
 @section('titulo', 'Panel de Inventario')
@@ -7,131 +6,173 @@
 
 @section('contenido')
 
-    <!-- Mensaje de bienvenida -->
-    <section class="inventory-welcome">
+<!-- Mensaje de bienvenida -->
+<section class="inventory-welcome">
+
+    <div>
+        <span class="inventory-label">MÓDULO DE ADMINISTRACIÓN</span>
+
+        <h2>¡Bienvenido al inventario!</h2>
+
+        <p>
+            Desde este panel puedes supervisar las existencias,
+            registrar ingresos de productos y revisar las alertas de stock.
+        </p>
+    </div>
+
+    <div class="inventory-welcome-icon">
+        📦
+    </div>
+
+</section>
+
+
+<!-- Resumen de funciones -->
+<section class="inventory-statistics">
+
+    <article class="inventory-stat-card">
+        <div class="inventory-stat-icon blue">📦</div>
 
         <div>
-            <span class="inventory-label">MÓDULO DE ADMINISTRACIÓN</span>
+            <span>Existencias</span>
+            <h3>Consultar productos</h3>
+            <p>Revisa las cantidades disponibles.</p>
+        </div>
+    </article>
 
-            <h2>¡Bienvenido al inventario!</h2>
+    <article class="inventory-stat-card">
+        <div class="inventory-stat-icon green">📥</div>
+
+        <div>
+            <span>Ingresos</span>
+            <h3>Registrar entradas</h3>
+            <p>Registra nuevos productos recibidos.</p>
+        </div>
+    </article>
+
+    <article class="inventory-stat-card">
+        <div class="inventory-stat-icon orange">⚠️</div>
+
+        <div>
+            <span>Alertas</span>
+            <h3>Controlar stock</h3>
+            <p>Identifica productos con existencias bajas.</p>
+        </div>
+    </article>
+
+</section>
+
+
+<!-- Accesos del módulo -->
+<section class="inventory-section">
+
+    <div class="inventory-section-heading">
+        <h2>Gestión de inventario</h2>
+
+        <p>
+            Selecciona una operación para continuar.
+        </p>
+    </div>
+
+    <div class="inventory-actions">
+
+        <a href="{{ route('encargado.inventario.existencias') }}"
+            class="inventory-action-card">
+
+            <span class="inventory-action-icon">📋</span>
+
+            <h3>Existencias</h3>
 
             <p>
-                Desde este panel puedes supervisar las existencias,
-                registrar ingresos de productos y revisar las alertas de stock.
+                Consulta los productos y sus cantidades disponibles.
             </p>
-        </div>
 
-        <div class="inventory-welcome-icon">
-            📦
-        </div>
+            <span class="inventory-action-link">
+                Consultar módulo →
+            </span>
 
-    </section>
-
-
-    <!-- Resumen de funciones -->
-    <section class="inventory-statistics">
-
-        <article class="inventory-stat-card">
-            <div class="inventory-stat-icon blue">📦</div>
-
-            <div>
-                <span>Existencias</span>
-                <h3>Consultar productos</h3>
-                <p>Revisa las cantidades disponibles.</p>
-            </div>
-        </article>
-
-        <article class="inventory-stat-card">
-            <div class="inventory-stat-icon green">📥</div>
-
-            <div>
-                <span>Ingresos</span>
-                <h3>Registrar entradas</h3>
-                <p>Registra nuevos productos recibidos.</p>
-            </div>
-        </article>
-
-        <article class="inventory-stat-card">
-            <div class="inventory-stat-icon orange">⚠️</div>
-
-            <div>
-                <span>Alertas</span>
-                <h3>Controlar stock</h3>
-                <p>Identifica productos con existencias bajas.</p>
-            </div>
-        </article>
-
-    </section>
+        </a>
 
 
-    <!-- Accesos del módulo -->
-    <section class="inventory-section">
+        <a href="{{ route('encargado.inventario.ingresos') }}"
+            class="inventory-action-card">
 
-        <div class="inventory-section-heading">
-            <h2>Gestión de inventario</h2>
+            <span class="inventory-action-icon">📥</span>
+
+            <h3>Ingresos de inventario</h3>
 
             <p>
-                Selecciona una operación para continuar.
+                Registra las entradas de productos al inventario.
             </p>
-        </div>
 
-        <div class="inventory-actions">
+            <span class="inventory-action-link">
+                Registrar ingreso →
+            </span>
 
-            <a href="{{ route('encargado.inventario.existencias') }}"
-               class="inventory-action-card">
-
-                <span class="inventory-action-icon">📋</span>
-
-                <h3>Existencias</h3>
-
-                <p>
-                    Consulta los productos y sus cantidades disponibles.
-                </p>
-
-                <span class="inventory-action-link">
-                    Consultar módulo →
-                </span>
-
-            </a>
+        </a>
 
 
-            <a href="{{ route('encargado.inventario.ingresos') }}"
-               class="inventory-action-card">
+        <a href="{{ route('encargado.inventario.alertas') }}"
+            class="inventory-action-card">
 
-                <span class="inventory-action-icon">📥</span>
+            <span class="inventory-action-icon">⚠️</span>
 
-                <h3>Ingresos de inventario</h3>
+            <h3>Alertas de stock</h3>
 
-                <p>
-                    Registra las entradas de productos al inventario.
-                </p>
+            <p>
+                Revisa los productos que necesitan reposición.
+            </p>
 
-                <span class="inventory-action-link">
-                    Registrar ingreso →
-                </span>
+            <span class="inventory-action-link">
+                Revisar alertas →
+            </span>
 
-            </a>
+        </a>
+
+        {{-- TARJETA: CATEGORÍAS --}}
+
+        <a href="{{ route('encargado.inventario.categorias') }}"
+            class="inventory-action-card">
+
+            <span class="inventory-action-icon">🏷️</span>
+
+            <h3>Administrar categorías</h3>
+
+            <p>
+                Registra y consulta las categorías utilizadas
+                para clasificar los productos.
+            </p>
+
+            <span class="inventory-action-link">
+                Gestionar categorías →
+            </span>
+
+        </a>
 
 
-            <a href="{{ route('encargado.inventario.alertas') }}"
-               class="inventory-action-card">
+        {{-- TARJETA: PROVEEDORES --}}
 
-                <span class="inventory-action-icon">⚠️</span>
+        <a href="{{ route('encargado.inventario.proveedores') }}"
+            class="inventory-action-card">
 
-                <h3>Alertas de stock</h3>
+            <span class="inventory-action-icon">🏢</span>
 
-                <p>
-                    Revisa los productos que necesitan reposición.
-                </p>
+            <h3>Administrar proveedores</h3>
 
-                <span class="inventory-action-link">
-                    Revisar alertas →
-                </span>
+            <p>
+                Registra y consulta las entidades que
+                suministran productos al inventario.
+            </p>
 
-            </a>
+            <span class="inventory-action-link">
+                Gestionar proveedores →
+            </span>
 
-        </div>
+        </a>
 
-    </section>
+
+    </div>
+
+</section>
 
 @endsection

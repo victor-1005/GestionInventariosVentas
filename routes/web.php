@@ -7,11 +7,13 @@ use App\Http\Controllers\Encargado\ExistenciasController;
 use App\Http\Controllers\Encargado\AlertasController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\Encargado\VentasController;
+use App\Http\Controllers\Encargado\CategoriaController;
+use App\Http\Controllers\Encargado\ProveedorController;
 
 // Página principal pública.
 Route::get('/', [InicioController::class, 'index'])
     ->name('inicio');
-    
+
 // Rutas de autenticación del encargado.
 Route::prefix('encargado')->name('encargado.')->group(function () {
 
@@ -85,6 +87,32 @@ Route::middleware(['auth', 'rol:encargado_inventario'])
             ExistenciasController::class,
             'eliminar'
         ])->name('existencias.eliminar');
+
+        //Para las categorias. 
+        // Mostrar categorías.
+        Route::get('/categorias', [
+            CategoriaController::class,
+            'index'
+        ])->name('categorias');
+
+        // Guardar nueva categoría.
+        Route::post('/categorias/guardar', [
+            CategoriaController::class,
+            'guardar'
+        ])->name('categorias.guardar');
+
+        // PROVEEDORES
+        // Mostrar proveedores.
+        Route::get('/proveedores', [
+            ProveedorController::class,
+            'index'
+        ])->name('proveedores');
+
+        // Guardar nuevo proveedor.
+        Route::post('/proveedores/guardar', [
+            ProveedorController::class,
+            'guardar'
+        ])->name('proveedores.guardar');
     });
 
 
@@ -113,6 +141,4 @@ Route::middleware(['auth', 'rol:encargado_ventas'])
             VentasController::class,
             'guardar'
         ])->name('guardar');
-
     });
-

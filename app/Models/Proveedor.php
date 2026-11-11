@@ -16,6 +16,9 @@ class Proveedor extends Model
 
     public function ingresos()
     {
-        return $this->hasMany(IngresoInventario::class);
+        return $this->hasMany(
+            IngresoInventario::class,
+            'proveedor_id'
+        );
     }
 }

@@ -1590,3 +1590,10 @@ body {
     }
 
 }
+/* Mensajes de validación de formularios */
+.error-text {
+    display: block;
+    color: #dc2626;
+    font-size: 13px;
+    margin-top: 5px;
+}
