@@ -17,6 +17,10 @@ use App\Http\Controllers\UsuarioController;
 Route::get('/', [InicioController::class, 'index'])
     ->name('inicio');
 
+// ==========================================
+// Rutas de Reporteria.
+// ==========================================
+
 // Pagina de reportes
 Route::get('/reportes', [ReportesController::class, 'index'])
     ->name('reportes.index');
@@ -27,10 +31,13 @@ Route::get('/reportes/ingresos',
 )->name('reportes.ingresos');
 
 //Pagina de salidas de reporteria
-
 Route::get('/reportes/salidas',
     [ReportesController::class, 'salidas']
 )->name('reportes.salidas');
+// Reporte de productos más vendidos
+Route::get('/reportes/productos-mas-vendidos',
+    [ReportesController::class, 'productosMasVendidos']
+)->name('reportes.mas-vendidos');
 
 // ==========================================
 // Rutas de autenticación del encargado.
