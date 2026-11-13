@@ -1,4 +1,3 @@
-
 @extends('encargado.layouts.app')
 
 @section('titulo', 'Registrar venta')
@@ -27,118 +26,73 @@
         @csrf
 
         <div class="ingreso-paneles">
+        {{-- PANEL 1: INFORMACIÓN DEL PRODUCTO --}}
+        <section class="ingreso-panel">
 
-            {{-- PANEL 1: INFORMACIÓN DEL PRODUCTO --}}
-            <section class="ingreso-panel">
-
-                <div class="panel-heading">
-                    <span class="panel-icon">📦</span>
-
-                    <div>
-                        <h3>Información del producto</h3>
-                        <p>Busca un producto existente para agregarlo a la venta.</p>
-                    </div>
+            <div class="panel-heading">
+                <span class="panel-icon"><i class="bi bi-box-seam" style="font-size: 1.5rem;"></i></span>
+                <div>
+                    <h3>Información del producto</h3>
+                    <p>Escribe el nombre o código para buscar un producto.</p>
                 </div>
+            </div>
 
-                <div class="ingreso-grid">
+            <div class="ingreso-grid">
 
-                    <div class="campo-ingreso campo-completo">
-                        <label for="codigo_producto">
-                            Código del producto
-                        </label>
-
+                {{-- NUEVO BUSCADOR INTELIGENTE --}}
+                <div class="campo-ingreso campo-completo" style="position: relative;">
+                    <label for="buscador_producto">Buscar producto (Nombre o Código)</label>
+                    
+                    <div style="position: relative;">
+                        <i class="bi bi-search" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #6c757d;"></i>
                         <input
                             type="text"
-                            id="codigo_producto"
-                            placeholder="Ej. PROD-001"
+                            id="buscador_producto"
+                            placeholder="Ej. Cuaderno o PROD-001"
                             autocomplete="off"
-                        >
-
-                        <button
-                            type="button"
-                            id="btnBuscarProducto"
-                            class="btn-agregar"
-                            style="margin-top: 10px;"
-                        >
-                            Buscar producto
-                        </button>
-                    </div>
-
-                    <div class="campo-ingreso campo-completo">
-                        <label for="nombre_producto">
-                            Nombre del producto
-                        </label>
-
-                        <input
-                            type="text"
-                            id="nombre_producto"
-                            placeholder="Nombre del producto"
-                            readonly
+                            style="padding-left: 35px; width: 100%;"
                         >
                     </div>
-
-                    <div class="campo-ingreso">
-                        <label for="stock_actual">
-                            Stock disponible
-                        </label>
-
-                        <input
-                            type="number"
-                            id="stock_actual"
-                            value="0"
-                            readonly
-                        >
-                    </div>
-
-                    <div class="campo-ingreso">
-                        <label for="cantidad_vendida">
-                            Cantidad a vender
-                        </label>
-
-                        <input
-                            type="number"
-                            id="cantidad_vendida"
-                            min="1"
-                            placeholder="0"
-                        >
-                    </div>
-
-                    <div class="campo-ingreso">
-                        <label for="precio">
-                            Precio de venta
-                        </label>
-
-                        <input
-                            type="number"
-                            id="precio"
-                            min="0"
-                            step="0.01"
-                            placeholder="0.00"
-                            readonly
-                        >
-                    </div>
-
+                    
+                    {{-- Aquí se inyectarán los resultados de la búsqueda --}}
+                    <ul id="resultados_busqueda" class="lista-autocompletado"></ul>
+                    
+                    {{-- Inputs ocultos que guardarán los datos reales para el formulario --}}
+                    <input type="hidden" id="codigo_producto" name="codigo_producto">
+                    <input type="hidden" id="nombre_producto" name="nombre_producto">
                 </div>
 
-                <div class="panel-actions">
-
-                    <button
-                        type="button"
-                        id="btnAgregarProducto"
-                        class="btn-agregar"
-                    >
-                        + Agregar producto a la lista
-                    </button>
-
+                <div class="campo-ingreso">
+                    <label for="stock_actual">Stock disponible</label>
+                    <input type="number" id="stock_actual" value="0" readonly style="background-color: #e9ecef;">
                 </div>
 
-            </section>
+                <div class="campo-ingreso">
+                    <label for="cantidad_vendida">Cantidad a vender</label>
+                    <input type="number" id="cantidad_vendida" min="1" placeholder="0">
+                </div>
+
+                <div class="campo-ingreso">
+                    <label for="precio">Precio de venta</label>
+                    <input type="number" id="precio" min="0" step="0.01" placeholder="0.00" readonly style="background-color: #e9ecef;">
+                </div>
+
+            </div>
+
+            <div class="panel-actions">
+                <button type="button" id="btnAgregarProducto" class="btn-agregar">
+                    + Agregar producto a la lista
+                </button>
+            </div>
+
+        </section>
 
             {{-- PANEL 2: ALERTAS DE STOCK --}}
             <section class="ingreso-panel">
 
                 <div class="panel-heading">
-                    <span class="panel-icon">⚠️</span>
+                    <!-- Icono de triángulo de advertencia -->
+                    <span class="panel-icon"><i class="bi bi-exclamation-triangle" style="font-size: 1.5rem;"></i></span>
 
                     <div>
                         <h3>Alertas de stock</h3>
@@ -180,7 +134,8 @@
                     @empty
 
                         <div class="alertas-sin-datos">
-                            <span>✅</span>
+                            <!-- Icono de check / verificado -->
+                            <span><i class="bi bi-check-circle" style="font-size: 1.5rem; color: #198754;"></i></span>
                             <p>No hay productos con stock bajo.</p>
                         </div>
 
@@ -189,7 +144,8 @@
                 </div>
 
                 <div class="nota-ingreso">
-                    <span>💡</span>
+                    <!-- Icono de bombilla / idea -->
+                    <span><i class="bi bi-lightbulb" style="font-size: 1.2rem; color: #ffc107;"></i></span>
                     <p>
                         El sistema verificará las existencias antes de
                         confirmar la venta y descontará las unidades
@@ -205,7 +161,8 @@
         <section class="lista-ingreso-panel">
 
             <div class="panel-heading">
-                <span class="panel-icon">📋</span>
+                <!-- Icono de lista de verificación / portapapeles -->
+                <span class="panel-icon"><i class="bi bi-card-checklist" style="font-size: 1.5rem;"></i></span>
 
                 <div>
                     <h3>Productos de la venta</h3>

@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 {{-- Título de la pestaña del navegador --}}
@@ -17,11 +16,11 @@
 
         <span class="welcome-label">SISTEMA WEB</span>
 
-        <h2>¡Bienvenido a nuestro sistema!</h2>
+        <h2>¡Bienvenido !</h2>
 
         <p>
-            Gestiona tus productos, controla las existencias,
-            registra ventas y consulta la información de tu negocio
+            Aplicación web para gestionar productos, controlar las existencias,
+            registrar ventas y consultar la información del negocio
             desde un solo lugar.
         </p>
 
@@ -32,8 +31,10 @@
     </div>
 
     <div class="welcome-icon">
-        <span>📦</span>
-        <span>📊</span>
+        <!-- Icono de caja (Inventario) -->
+        <i class="bi bi-box-seam" style="font-size: 3rem;"></i>
+        <!-- Icono de gráfico de barras (Ventas) -->
+        <i class="bi bi-bar-chart-line" style="font-size: 3rem;"></i>
     </div>
 
 </section>
@@ -44,7 +45,8 @@
 
     <article class="stat-card">
 
-        <div class="stat-icon">📦</div>
+        <!-- Icono de caja -->
+        <div class="stat-icon"><i class="bi bi-box-seam"></i></div>
 
         <h3>Total de productos</h3>
 
@@ -57,7 +59,8 @@
 
     <article class="stat-card">
 
-        <div class="stat-icon">🏷️</div>
+        <!-- Icono de etiquetas -->
+        <div class="stat-icon"><i class="bi bi-tags"></i></div>
 
         <h3>Categorías</h3>
 
@@ -70,7 +73,8 @@
 
     <article class="stat-card">
 
-        <div class="stat-icon">🛒</div>
+        <!-- Icono de carrito de compras -->
+        <div class="stat-icon"><i class="bi bi-cart3"></i></div>
 
         <h3>Ventas</h3>
 
@@ -83,7 +87,8 @@
 
     <article class="stat-card">
 
-        <div class="stat-icon">⚠️</div>
+        <!-- Icono de triángulo de advertencia -->
+        <div class="stat-icon"><i class="bi bi-exclamation-triangle"></i></div>
 
         <h3>Stock bajo</h3>
 
@@ -115,7 +120,8 @@
         <!-- Inventario -->
         <a href="{{ route('encargado.login') }}" class="access-card">
 
-            <span class="access-icon">🏭</span>
+            <!-- Icono de edificio/almacén -->
+            <span class="access-icon"><i class="bi bi-building" style="font-size: 2rem;"></i></span>
 
             <h3>Inventario</h3>
 
@@ -130,7 +136,8 @@
         <!-- Ventas -->
         <a href="{{ route('encargado.login') }}" class="access-card">
 
-            <span class="access-icon">🛒</span>
+            <!-- Icono de carrito de compras -->
+            <span class="access-icon"><i class="bi bi-cart3" style="font-size: 2rem;"></i></span>
 
             <h3>Ventas</h3>
 
@@ -145,7 +152,8 @@
         <!-- Reportes -->
         <a href="{{ route('reportes.index') }}" class="access-card">
 
-            <span class="access-icon">📈</span>
+            <!-- Icono de gráfico de crecimiento -->
+            <span class="access-icon"><i class="bi bi-graph-up-arrow" style="font-size: 2rem;"></i></span>
 
             <h3>Reportes</h3>
 
@@ -160,7 +168,8 @@
         <!-- Crear usuarios -->
         <a href="{{ route('usuarios.index') }}" class="access-card">
 
-            <span class="access-icon">👤</span>
+            <!-- Icono de persona con signo más (añadir usuario) -->
+            <span class="access-icon"><i class="bi bi-person-plus" style="font-size: 2rem;"></i></span>
 
             <h3>Crear usuarios</h3>
 

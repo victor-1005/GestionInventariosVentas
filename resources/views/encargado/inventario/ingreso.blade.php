@@ -5,13 +5,71 @@
 
 @section('contenido')
 
+{{-- ESTILOS PARA DARLE EL TOQUE MODERNO DE LA IMAGEN --}}
+<style>
+    /* Banner superior con gradiente sutil */
+    .ingreso-heading {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-left: 5px solid #4e73df;
+        padding: 1.5rem 2rem;
+        border-radius: 12px;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+    
+    /* Tarjetas de los paneles */
+    .ingreso-panel, .lista-ingreso-panel {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        border: 1px solid #f0f0f0;
+        transition: transform 0.2s ease;
+    }
+    
+    .ingreso-panel:hover {
+        transform: translateY(-2px);
+    }
+
+    /* Iconos dentro de los paneles */
+    .panel-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 45px;
+        height: 45px;
+        background: #eef2ff; /* Azul muy claro */
+        color: #4e73df; /* Azul principal */
+        border-radius: 10px;
+        font-size: 1.4rem;
+        margin-right: 15px;
+    }
+
+    /* Botones con gradiente */
+    .btn-agregar {
+        background: linear-gradient(to right, #4e73df, #224abe);
+        color: white;
+        border: none;
+        padding: 0.6rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(78, 115, 223, 0.3);
+    }
+
+    .btn-agregar:hover {
+        background: linear-gradient(to right, #224abe, #4e73df);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(78, 115, 223, 0.4);
+    }
+</style>
+
 <div class="ingreso-wrapper">
 
-    {{-- ENCABEZADO DE LA PANTALLA --}}
+    {{-- ENCABEZADO DE LA PANTALLA (Estilo Banner) --}}
     <div class="ingreso-heading">
         <div>
-            <h2>Nuevo ingreso de productos</h2>
-            <p>Registra los productos recibidos de tus proveedores.</p>
+            <h2 style="margin: 0; color: #224abe; font-weight: 700;">Nuevo ingreso de productos</h2>
+            <p style="margin: 0.5rem 0 0 0; color: #6c757d;">Registra los productos recibidos de tus proveedores.</p>
         </div>
     </div>
 
@@ -24,11 +82,11 @@
             {{-- PANEL 1: INFORMACIÓN DEL PRODUCTO --}}
             <section class="ingreso-panel">
 
-                <div class="panel-heading">
-                    <span class="panel-icon">📦</span>
+                <div class="panel-heading" style="display: flex; align-items: center; border-bottom: 1px solid #f0f0f0; padding-bottom: 1rem; margin-bottom: 1.5rem;">
+                    <span class="panel-icon"><i class="bi bi-box-seam"></i></span>
                     <div>
-                        <h3>Información del producto</h3>
-                        <p>Busca un producto existente o registra uno nuevo.</p>
+                        <h3 style="margin: 0; font-size: 1.2rem; color: #333;">Información del producto</h3>
+                        <p style="margin: 0; font-size: 0.9rem; color: #6c757d;">Busca un producto existente o registra uno nuevo.</p>
                     </div>
                 </div>
 
@@ -68,7 +126,7 @@
                     <div class="campo-ingreso">
                         <label for="stock_actual">Stock actual</label>
                         <input type="number" id="stock_actual"
-                            value="0" readonly>
+                            value="0" readonly style="background-color: #f8f9fa;">
                     </div>
 
                     <div class="campo-ingreso">
@@ -100,7 +158,7 @@
                 <div class="panel-actions">
                     <button type="button" id="btnAgregarProducto"
                         class="btn-agregar">
-                        + Agregar producto a la lista
+                        <i class="bi bi-plus-circle"></i> Agregar producto a la lista
                     </button>
                 </div>
 
@@ -109,11 +167,11 @@
             {{-- PANEL 2: DOCUMENTO Y PROVEEDOR --}}
             <section class="ingreso-panel">
 
-                <div class="panel-heading">
-                    <span class="panel-icon">📄</span>
+                <div class="panel-heading" style="display: flex; align-items: center; border-bottom: 1px solid #f0f0f0; padding-bottom: 1rem; margin-bottom: 1.5rem;"> 
+                    <span class="panel-icon"><i class="bi bi-file-earmark-text"></i></span>
                     <div>
-                        <h3>Información del ingreso</h3>
-                        <p>Datos de la factura o documento recibido.</p>
+                        <h3 style="margin: 0; font-size: 1.2rem; color: #333;">Información del ingreso</h3>
+                        <p style="margin: 0; font-size: 0.9rem; color: #6c757d;">Datos de la factura o documento recibido.</p>
                     </div>
                 </div>
 
@@ -149,11 +207,10 @@
 
                 </div>
 
-                <div class="nota-ingreso">
-                    <span>💡</span>
-                    <p>
-                        Los datos del documento se utilizarán para registrar
-                        todos los productos agregados a esta compra.
+                <div class="nota-ingreso" style="background: #f8f9fa; padding: 1rem; border-radius: 8px; display: flex; align-items: center; margin-top: 1.5rem;">
+                    <span style="margin-right: 10px; color: #4e73df; font-size: 1.2rem;"><i class="bi bi-lightbulb"></i></span>
+                    <p style="margin: 0; font-size: 0.9rem; color: #6c757d;">
+                        Los datos del documento se utilizarán para registrar todos los productos agregados a esta compra.
                     </p>
                 </div>
 
@@ -164,11 +221,11 @@
         {{-- PANEL 3: LISTA DE PRODUCTOS --}}
         <section class="lista-ingreso-panel">
 
-            <div class="panel-heading">
-                <span class="panel-icon">📋</span>
+            <div class="panel-heading" style="display: flex; align-items: center; border-bottom: 1px solid #f0f0f0; padding-bottom: 1rem; margin-bottom: 1.5rem;">
+                <span class="panel-icon"><i class="bi bi-card-checklist"></i></span>
                 <div>
-                    <h3>Productos del ingreso</h3>
-                    <p>Revisa los productos antes de guardar el ingreso.</p>
+                    <h3 style="margin: 0; font-size: 1.2rem; color: #333;">Productos del ingreso</h3>
+                    <p style="margin: 0; font-size: 0.9rem; color: #6c757d;">Revisa los productos antes de guardar el ingreso.</p>
                 </div>
             </div>
 
@@ -197,25 +254,23 @@
             </div>
 
             {{-- RESUMEN DEL INGRESO --}}
-            <div class="resumen-ingreso">
+            <div class="resumen-ingreso" style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem; display: flex; justify-content: flex-end; gap: 2rem;">
                 <div class="resumen-total">
                     <span>Total de productos:</span>
                     <strong id="totalUnidades">0</strong>
                 </div>
 
                 <div class="resumen-total resumen-principal">
-                    <span>Total del ingreso:</span>
-                    <strong id="totalIngreso">$0.00</strong>
+                    <span style="font-weight: 600; color: #224abe;">Total del ingreso:</span>
+                    <strong id="totalIngreso" style="font-size: 1.3rem; color: #224abe;">$0.00</strong>
                 </div>
             </div>
 
             {{-- ACCIONES DEL INGRESO --}}
-            <div class="panel-actions">
-
-                <button type="submit" id="btnGuardarIngreso" class="btn-agregar">
-                    Guardar ingreso de inventario
+            <div class="panel-actions" style="margin-top: 1.5rem; text-align: right;">
+                <button type="submit" id="btnGuardarIngreso" class="btn-agregar" style="padding: 0.8rem 2rem; font-size: 1rem;">
+                    <i class="bi bi-save"></i> Guardar ingreso de inventario
                 </button>
-
             </div>
         </section>
 
@@ -225,5 +280,6 @@
 </div>
 
 @endsection
+
 <!-- para el js -->
 <script src="{{ asset('js/ingresos.js') }}"></script>

@@ -86,7 +86,35 @@ class VentasController extends Controller
         ], 200);
     }
 
+    public function buscarProductosAutocompletado(Request $request)
+    {
+        $query = $request->input('q');
+        
+        // Si no hay texto, devolvemos un array vacío
+        if (empty(trim($query))) {
+            return response()->json([]);
+        }
 
+        // Buscar por nombre O por código (coincidencia parcial)
+        $productos = Producto::where('nombre_producto', 'LIKE', "%{$query}%")
+                            ->orWhere('codigo_producto', 'LIKE', "%{$query}%")
+                            ->limit(10) // Límite para no saturar el DOM
+                            ->get();
+
+        // Formatear la respuesta para que el JS la entienda fácilmente
+        $resultados = $productos->map(function ($producto) {
+            return [
+                'id' => $producto->id,
+                'codigo' => $producto->codigo_producto,
+                'nombre' => $producto->nombre_producto,
+                'precio' => (float) $producto->precio,
+                'stock_actual' => (int) $producto->stock_actual,
+                'stock_minimo' => (int) $producto->stock_minimo
+            ];
+        });
+
+        return response()->json($resultados);
+    }
     // ==========================================
     // 3. REGISTRAR TRANSACCIÓN
     // ==========================================

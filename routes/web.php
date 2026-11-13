@@ -193,6 +193,14 @@ Route::middleware(['auth', 'rol:encargado_ventas'])
             'index'
         ])->name('index');
 
+
+                // NUEVA RUTA: Autocompletado (Búsqueda por nombre o código parcial)
+        // Usamos '/productos/autocompletado' para que no choque con '/productos/buscar/{codigo}'
+        Route::get('/productos/autocompletado', [
+            VentasController::class,
+            'buscarProductosAutocompletado'
+        ])->name('productos.autocompletado');
+
         // Buscar producto por código.
         Route::get('/productos/buscar/{codigo}', [
             VentasController::class,
